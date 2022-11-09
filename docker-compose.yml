@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  xui:
+    image: local/xui
+    container_name: x-ui
+    volumes:
+      - ./db/:/etc/x-ui/
+      - ./cert/:/root/cert/
+    network_mode: host
+
