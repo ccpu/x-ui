@@ -5,10 +5,21 @@ RUN go build main.go
 
 
 FROM debian:11-slim
+
+ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends -y ca-certificates \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-WORKDIR /root
-COPY --from=builder  /root/main /root/x-ui
-COPY bin/. /root/bin/.
+
+RUN useradd -ms /bin/bash pwuser
+
+WORKDIR /home/pwuser
+
+COPY --from=builder  /root/main /home/pwuser/x-ui
+COPY bin/. /home/pwuser/bin/.
+
+RUN chown -R pwuser:pwuser /home/pwuser/bin/
+
+USER pwuser
+
 VOLUME [ "/etc/x-ui" ]
 CMD [ "./x-ui" ]
