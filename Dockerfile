@@ -19,7 +19,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends -y ca-certifica
 # RUN chown -R pwuser:pwuser /home/pwuser/bin/
 # USER pwuser
 
-RUN useradd -u 4000 -ms /bin/bash pwuser
+RUN groupadd -r pwuser -g 4000
+RUN useradd -u 4001 -g pwuser -ms /bin/bash pwuser
 
 WORKDIR /home/pwuser
 
