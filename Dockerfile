@@ -11,10 +11,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends -y ca-certifica
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # https://github.com/moby/moby/issues/2259
-# Only root user have access to volume:
-# We create same user name,id,gid as none privilage user in the host to be able access volume
-RUN groupadd -r pwuser -g 4000
-RUN useradd -u 4001 -g pwuser -ms /bin/bash pwuser
+# Docker image with none root user cant access volumes
+#Hence wWe create a user and chown -R 4001 in host
+RUN useradd -u 4001 -ms /bin/bash pwuser
 
 WORKDIR /home/pwuser
 
