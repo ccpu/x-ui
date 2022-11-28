@@ -15,6 +15,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends -y ca-certifica
 # Hence we create a user to map in the host
 RUN useradd -u 4001 -ms /bin/bash pwuser
 
+# prevent root user login
+RUN chsh -s /usr/sbin/nologin root
+
 WORKDIR /home/pwuser
 
 COPY --from=builder  /root/main /home/pwuser/x-ui
