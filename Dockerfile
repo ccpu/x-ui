@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends -y ca-certifica
 
 # https://github.com/moby/moby/issues/2259
 # Docker image with none root user cant access volumes
-#Hence wWe create a user and chown -R 4001 in host
+# Hence we create a user to map in the host
 RUN useradd -u 4001 -ms /bin/bash pwuser
 
 WORKDIR /home/pwuser
