@@ -10,7 +10,16 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends -y ca-certificates \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN useradd -ms /bin/bash pwuser
+# https://github.com/moby/moby/issues/2259
+# Only root use have access to volume
+# RUN useradd -ms /bin/bash pwuser
+# WORKDIR /home/pwuser
+# COPY --from=builder  /root/main /home/pwuser/x-ui
+# COPY bin/. /home/pwuser/bin/.
+# RUN chown -R pwuser:pwuser /home/pwuser/bin/
+# USER pwuser
+
+RUN useradd -u 4000 -ms /bin/bash pwuser
 
 WORKDIR /home/pwuser
 
